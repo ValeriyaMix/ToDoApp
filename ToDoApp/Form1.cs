@@ -29,7 +29,7 @@ namespace ToDoApp
             var con = new SQLiteConnection(cs);
             con.Open();
 
-            string stm = "SELECT * FROM TodoList";
+            string stm = "SELECT * FROM TodoList WHERE isDeleted = 0";
             var cmd = new SQLiteCommand(stm, con);
             dr = cmd.ExecuteReader();
 
@@ -51,14 +51,14 @@ namespace ToDoApp
 
 
                     string sql = @"CREATE TABLE TodoList(id INTEGER PRIMARY KEY,
-            date TEXT, task TEXT, category TEXT, postponeTimes INT, isDeleted INT)";
+            date TEXT, task TEXT, category TEXT, postponeTimes INT DEFAULT 0, isDeleted INT DEFAULT 0)";
                     SQLiteCommand command = new SQLiteCommand(sql, sqlite);
                     command.ExecuteNonQuery();
                 }
             }
             else
             {
-                //Console.WriteLine("Database cannot be created");
+                Console.WriteLine("Database cannot be created");
             }
             
             
@@ -105,6 +105,27 @@ namespace ToDoApp
             {
                 Console.WriteLine("It is not possible to insert the data");
 
+            }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            var con = new SQLiteConnection(cs);
+            con.Open();
+
+            var cmd = new SQLiteCommand(con);
+            try
+            {
+                cmd.CommandText = "UPDATE ToDoList SET isDeleted = 1 WHERE date = @date";
+                cmd.Prepare();
+                cmd.Parameters.AddWithValue("@Date", textBox_date.Text);
+                cmd.ExecuteNonQuery();
+                dataGridView1.Rows.Clear();
+                ShowData();
+            }
+            catch(Exception)
+            {
+                Console.WriteLine("Data cannot be updated");
             }
         }
     }

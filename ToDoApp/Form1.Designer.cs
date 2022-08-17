@@ -35,13 +35,13 @@
             this.textBox_task = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.date = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.task = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.category = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.textBox_date = new System.Windows.Forms.TextBox();
             this.textBox_category = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.date = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.task = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.category = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -81,6 +81,7 @@
             this.button4.TabIndex = 3;
             this.button4.Text = "Delete";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // textBox_task
             // 
@@ -113,6 +114,27 @@
             this.dataGridView1.Size = new System.Drawing.Size(435, 248);
             this.dataGridView1.TabIndex = 8;
             // 
+            // date
+            // 
+            this.date.HeaderText = "Task date";
+            this.date.MinimumWidth = 6;
+            this.date.Name = "date";
+            this.date.Width = 125;
+            // 
+            // task
+            // 
+            this.task.HeaderText = "Task";
+            this.task.MinimumWidth = 6;
+            this.task.Name = "task";
+            this.task.Width = 125;
+            // 
+            // category
+            // 
+            this.category.HeaderText = "Task category";
+            this.category.MinimumWidth = 6;
+            this.category.Name = "category";
+            this.category.Width = 125;
+            // 
             // textBox_date
             // 
             this.textBox_date.Location = new System.Drawing.Point(44, 53);
@@ -144,27 +166,6 @@
             this.label3.Size = new System.Drawing.Size(94, 16);
             this.label3.TabIndex = 12;
             this.label3.Text = "Task category";
-            // 
-            // date
-            // 
-            this.date.HeaderText = "Task date";
-            this.date.MinimumWidth = 6;
-            this.date.Name = "date";
-            this.date.Width = 125;
-            // 
-            // task
-            // 
-            this.task.HeaderText = "Task";
-            this.task.MinimumWidth = 6;
-            this.task.Name = "task";
-            this.task.Width = 125;
-            // 
-            // category
-            // 
-            this.category.HeaderText = "Task category";
-            this.category.MinimumWidth = 6;
-            this.category.Name = "category";
-            this.category.Width = 125;
             // 
             // Form1
             // 
