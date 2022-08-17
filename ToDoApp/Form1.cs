@@ -35,7 +35,7 @@ namespace ToDoApp
 
             while (dr.Read())
             {
-                dataGridView1.Rows.Insert(0, dr.GetString(1), dr.GetString(2), dr.GetString(3));
+                dataGridView1.Rows.Insert(0, dr.GetString(1), dr.GetString(2), dr.GetString(3), dr.GetString(4));
             }
         }
 
@@ -51,7 +51,7 @@ namespace ToDoApp
 
 
                     string sql = @"CREATE TABLE TodoList(id INTEGER PRIMARY KEY,
-            date TEXT, task TEXT, category TEXT, postponeTimes INT DEFAULT 0, isDeleted INT DEFAULT 0)";
+            date TEXT, due_date TEXT, task TEXT, category TEXT, postponeTimes INT DEFAULT 0, isDeleted INT DEFAULT 0)";
                     SQLiteCommand command = new SQLiteCommand(sql, sqlite);
                     command.ExecuteNonQuery();
                 }
@@ -80,23 +80,27 @@ namespace ToDoApp
 
             try
             {
-                cmd.CommandText = "INSERT INTO ToDoList(date, task, category) " +
-                "VALUES (@date, @task, @category)";
+                cmd.CommandText = "INSERT INTO ToDoList(date, due_date, task, category) " +
+                "VALUES (@date, @due_date, @task, @category)";
 
                 string DATE = textBox_date.Text;
                 string TASK = textBox_task.Text;
                 string CATEGORY = textBox_category.Text;
+                string DUE_DATE = textBox_duedate.Text;
 
                 cmd.Parameters.AddWithValue("@date", DATE);
                 cmd.Parameters.AddWithValue("@task", TASK);
                 cmd.Parameters.AddWithValue("@category", CATEGORY);
+                cmd.Parameters.AddWithValue("@due_date", DUE_DATE);
 
-                dataGridView1.ColumnCount = 3;
-                dataGridView1.Columns[0].Name = "Task date";
-                dataGridView1.Columns[1].Name = "Task";
-                dataGridView1.Columns[2].Name = "Task category";
+                dataGridView1.ColumnCount = 4;
+                dataGridView1.Columns[0].Name = "Set date";
+                dataGridView1.Columns[1].Name = "Due date";
+                dataGridView1.Columns[2].Name = "Task";
+                dataGridView1.Columns[3].Name = "Task category";
+                
 
-                string[] row = new string[] { DATE, TASK, CATEGORY };
+                string[] row = new string[] { DATE, DUE_DATE, TASK, CATEGORY };
 
                 dataGridView1.Rows.Add(row);
                 cmd.ExecuteNonQuery();
@@ -118,7 +122,7 @@ namespace ToDoApp
             {
                 cmd.CommandText = "UPDATE ToDoList SET isDeleted = 1 WHERE date = @date";
                 cmd.Prepare();
-                cmd.Parameters.AddWithValue("@Date", textBox_date.Text);
+                cmd.Parameters.AddWithValue("@date", textBox_date.Text);
                 cmd.ExecuteNonQuery();
                 dataGridView1.Rows.Clear();
                 ShowData();
@@ -127,6 +131,51 @@ namespace ToDoApp
             {
                 Console.WriteLine("Data cannot be updated");
             }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            var con = new SQLiteConnection(cs);
+            con.Open();
+
+            var cmd = new SQLiteCommand(con);
+            try
+            {
+                cmd.CommandText = "UPDATE ToDoList SET due_date = 'Completed' WHERE date = @date";
+                cmd.Prepare();
+                cmd.Parameters.AddWithValue("@date", textBox_date.Text);
+                cmd.ExecuteNonQuery();
+                dataGridView1.Rows.Clear();
+                ShowData();
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Data cannot be updated");
+            }
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            var con = new SQLiteConnection(cs);
+            con.Open();
+
+            var cmd = new SQLiteCommand(con);
+            try
+            {
+                cmd.CommandText = "UPDATE ToDoList SET postponeTimes = postponeTimes + 1, due_date = @due_date WHERE date = @date";
+                cmd.Prepare();
+                cmd.Parameters.AddWithValue("@date", textBox_date.Text);
+                cmd.Parameters.AddWithValue("@due_date", textBox_duedate.Text);
+                cmd.ExecuteNonQuery();
+                dataGridView1.Rows.Clear();
+                ShowData();
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("Data cannot be updated");
+            }
+
         }
     }
 }

@@ -35,13 +35,16 @@
             this.textBox_task = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.date = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.task = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.category = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.textBox_date = new System.Windows.Forms.TextBox();
             this.textBox_category = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.textBox_duedate = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.date = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.due_date = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.task = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.category = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -63,6 +66,7 @@
             this.button2.TabIndex = 1;
             this.button2.Text = "Complete";
             this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button3
             // 
@@ -72,6 +76,7 @@
             this.button3.TabIndex = 2;
             this.button3.Text = "Postpone";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // button4
             // 
@@ -85,7 +90,7 @@
             // 
             // textBox_task
             // 
-            this.textBox_task.Location = new System.Drawing.Point(44, 126);
+            this.textBox_task.Location = new System.Drawing.Point(25, 163);
             this.textBox_task.Multiline = true;
             this.textBox_task.Name = "textBox_task";
             this.textBox_task.Size = new System.Drawing.Size(249, 110);
@@ -94,7 +99,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(47, 96);
+            this.label1.Location = new System.Drawing.Point(28, 139);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(96, 16);
             this.label1.TabIndex = 5;
@@ -105,21 +110,77 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.date,
+            this.due_date,
             this.task,
             this.category});
-            this.dataGridView1.Location = new System.Drawing.Point(339, 53);
+            this.dataGridView1.Location = new System.Drawing.Point(310, 53);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(435, 248);
+            this.dataGridView1.Size = new System.Drawing.Size(478, 248);
             this.dataGridView1.TabIndex = 8;
+            // 
+            // textBox_date
+            // 
+            this.textBox_date.Location = new System.Drawing.Point(24, 53);
+            this.textBox_date.Name = "textBox_date";
+            this.textBox_date.Size = new System.Drawing.Size(249, 22);
+            this.textBox_date.TabIndex = 9;
+            // 
+            // textBox_category
+            // 
+            this.textBox_category.Location = new System.Drawing.Point(26, 303);
+            this.textBox_category.Name = "textBox_category";
+            this.textBox_category.Size = new System.Drawing.Size(249, 22);
+            this.textBox_category.TabIndex = 10;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(28, 30);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(89, 16);
+            this.label2.TabIndex = 11;
+            this.label2.Text = "Task set date";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(32, 281);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(94, 16);
+            this.label3.TabIndex = 12;
+            this.label3.Text = "Task category";
+            // 
+            // textBox_duedate
+            // 
+            this.textBox_duedate.Location = new System.Drawing.Point(24, 108);
+            this.textBox_duedate.Name = "textBox_duedate";
+            this.textBox_duedate.Size = new System.Drawing.Size(250, 22);
+            this.textBox_duedate.TabIndex = 13;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(27, 87);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(94, 16);
+            this.label4.TabIndex = 14;
+            this.label4.Text = "Task due date";
             // 
             // date
             // 
-            this.date.HeaderText = "Task date";
+            this.date.HeaderText = "Set date";
             this.date.MinimumWidth = 6;
             this.date.Name = "date";
-            this.date.Width = 125;
+            this.date.Width = 60;
+            // 
+            // due_date
+            // 
+            this.due_date.HeaderText = "Due date";
+            this.due_date.MinimumWidth = 6;
+            this.due_date.Name = "due_date";
+            this.due_date.Width = 60;
             // 
             // task
             // 
@@ -133,45 +194,15 @@
             this.category.HeaderText = "Task category";
             this.category.MinimumWidth = 6;
             this.category.Name = "category";
-            this.category.Width = 125;
-            // 
-            // textBox_date
-            // 
-            this.textBox_date.Location = new System.Drawing.Point(44, 53);
-            this.textBox_date.Name = "textBox_date";
-            this.textBox_date.Size = new System.Drawing.Size(249, 22);
-            this.textBox_date.TabIndex = 9;
-            // 
-            // textBox_category
-            // 
-            this.textBox_category.Location = new System.Drawing.Point(44, 279);
-            this.textBox_category.Name = "textBox_category";
-            this.textBox_category.Size = new System.Drawing.Size(249, 22);
-            this.textBox_category.TabIndex = 10;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(49, 25);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(68, 16);
-            this.label2.TabIndex = 11;
-            this.label2.Text = "Task date";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(50, 256);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(94, 16);
-            this.label3.TabIndex = 12;
-            this.label3.Text = "Task category";
+            this.category.Width = 70;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.textBox_duedate);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.textBox_category);
@@ -205,7 +236,10 @@
         private System.Windows.Forms.TextBox textBox_category;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox textBox_duedate;
+        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.DataGridViewTextBoxColumn date;
+        private System.Windows.Forms.DataGridViewTextBoxColumn due_date;
         private System.Windows.Forms.DataGridViewTextBoxColumn task;
         private System.Windows.Forms.DataGridViewTextBoxColumn category;
     }
