@@ -104,6 +104,10 @@ namespace ToDoApp
 
                 dataGridView1.Rows.Add(row);
                 cmd.ExecuteNonQuery();
+                textBox_date.Text = String.Empty;
+                textBox_duedate.Text = String.Empty;
+                textBox_task.Text = String.Empty;
+                textBox_category.Text = String.Empty;
             }
             catch (Exception)
             {
@@ -126,6 +130,10 @@ namespace ToDoApp
                 cmd.ExecuteNonQuery();
                 dataGridView1.Rows.Clear();
                 ShowData();
+                textBox_date.Text = String.Empty;
+                textBox_duedate.Text = String.Empty;
+                textBox_task.Text = String.Empty;
+                textBox_category.Text = String.Empty;
             }
             catch(Exception)
             {
@@ -147,6 +155,10 @@ namespace ToDoApp
                 cmd.ExecuteNonQuery();
                 dataGridView1.Rows.Clear();
                 ShowData();
+                textBox_date.Text = String.Empty;
+                textBox_duedate.Text = String.Empty;
+                textBox_task.Text = String.Empty;
+                textBox_category.Text = String.Empty;
             }
             catch (Exception)
             {
@@ -170,6 +182,22 @@ namespace ToDoApp
                 cmd.ExecuteNonQuery();
                 dataGridView1.Rows.Clear();
                 ShowData();
+                textBox_date.Text = String.Empty;
+                textBox_duedate.Text = String.Empty;
+                textBox_task.Text = String.Empty;
+                textBox_category.Text = String.Empty;
+
+                cmd.CommandText = "SELECT * FROM ToDoList WHERE postponeTimes >= 3";
+                int checkCmd = Convert.ToInt32(cmd.ExecuteScalar());
+
+                if (checkCmd != 0)
+                {
+                    string message = $"There are tasks that you already have been postponed more than three times ";
+                    string title = "Get things done!";
+                    MessageBox.Show(message, title);
+                }
+
+
             }
             catch (Exception)
             {
