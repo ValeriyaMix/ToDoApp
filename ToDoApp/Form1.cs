@@ -30,12 +30,14 @@ namespace ToDoApp
             con.Open();
 
             string stm = "SELECT * FROM TodoList WHERE isDeleted = 0";
+            
             var cmd = new SQLiteCommand(stm, con);
             dr = cmd.ExecuteReader();
+            
 
             while (dr.Read())
             {
-                dataGridView1.Rows.Insert(0, dr.GetString(1), dr.GetString(2), dr.GetString(3), dr.GetString(4));
+                dataGridView1.Rows.Insert(0, dr["id"], dr["date"], dr["due_date"], dr["task"], dr["category"]);
             }
         }
 
@@ -69,6 +71,8 @@ namespace ToDoApp
         {
             TableCreation();
             ShowData();
+            textBox_date_TextChanged(sender, e);
+            
 
         }
 
@@ -78,6 +82,7 @@ namespace ToDoApp
             con.Open();
             var cmd = new SQLiteCommand(con);
 
+
             try
             {
                 cmd.CommandText = "INSERT INTO ToDoList(date, due_date, task, category) " +
@@ -86,26 +91,19 @@ namespace ToDoApp
                 string DATE = textBox_date.Text;
                 string TASK = textBox_task.Text;
                 string CATEGORY = textBox_category.Text;
-                string DUE_DATE = textBox_duedate.Text;
+                string DUE_DATE = maskedTextBox1.Text;
 
                 cmd.Parameters.AddWithValue("@date", DATE);
                 cmd.Parameters.AddWithValue("@task", TASK);
                 cmd.Parameters.AddWithValue("@category", CATEGORY);
                 cmd.Parameters.AddWithValue("@due_date", DUE_DATE);
 
-                dataGridView1.ColumnCount = 4;
-                dataGridView1.Columns[0].Name = "Set date";
-                dataGridView1.Columns[1].Name = "Due date";
-                dataGridView1.Columns[2].Name = "Task";
-                dataGridView1.Columns[3].Name = "Task category";
-                
-
-                string[] row = new string[] { DATE, DUE_DATE, TASK, CATEGORY };
-
-                dataGridView1.Rows.Add(row);
                 cmd.ExecuteNonQuery();
+                dataGridView1.Rows.Clear();
+                ShowData();
+
                 textBox_date.Text = String.Empty;
-                textBox_duedate.Text = String.Empty;
+                maskedTextBox1.Text = String.Empty;
                 textBox_task.Text = String.Empty;
                 textBox_category.Text = String.Empty;
             }
@@ -121,21 +119,22 @@ namespace ToDoApp
             var con = new SQLiteConnection(cs);
             con.Open();
 
+                
             var cmd = new SQLiteCommand(con);
+                
             try
             {
+                int rowIndex = dataGridView1.CurrentCell.RowIndex;
                 cmd.CommandText = "UPDATE ToDoList SET isDeleted = 1 WHERE date = @date";
                 cmd.Prepare();
-                cmd.Parameters.AddWithValue("@date", textBox_date.Text);
+                cmd.Parameters.AddWithValue("@date", rowIndex);
                 cmd.ExecuteNonQuery();
                 dataGridView1.Rows.Clear();
                 ShowData();
                 textBox_date.Text = String.Empty;
-                textBox_duedate.Text = String.Empty;
-                textBox_task.Text = String.Empty;
-                textBox_category.Text = String.Empty;
+                    
             }
-            catch(Exception)
+            catch (Exception)
             {
                 Console.WriteLine("Data cannot be updated");
             }
@@ -156,7 +155,7 @@ namespace ToDoApp
                 dataGridView1.Rows.Clear();
                 ShowData();
                 textBox_date.Text = String.Empty;
-                textBox_duedate.Text = String.Empty;
+                maskedTextBox1.Text = String.Empty;
                 textBox_task.Text = String.Empty;
                 textBox_category.Text = String.Empty;
             }
@@ -178,12 +177,12 @@ namespace ToDoApp
                 cmd.CommandText = "UPDATE ToDoList SET postponeTimes = postponeTimes + 1, due_date = @due_date WHERE date = @date";
                 cmd.Prepare();
                 cmd.Parameters.AddWithValue("@date", textBox_date.Text);
-                cmd.Parameters.AddWithValue("@due_date", textBox_duedate.Text);
+                cmd.Parameters.AddWithValue("@due_date", maskedTextBox1.Text);
                 cmd.ExecuteNonQuery();
                 dataGridView1.Rows.Clear();
                 ShowData();
                 textBox_date.Text = String.Empty;
-                textBox_duedate.Text = String.Empty;
+                maskedTextBox1.Text = String.Empty;
                 textBox_task.Text = String.Empty;
                 textBox_category.Text = String.Empty;
 
@@ -204,6 +203,22 @@ namespace ToDoApp
                 Console.WriteLine("Data cannot be updated");
             }
 
+        }
+
+        private void textBox_date_TextChanged(object sender, EventArgs e)
+        {
+            
+            textBox_date.Text = DateTime.Now.ToString("dd/MM/yy");
+            
+        }
+
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
+            {
+                dataGridView1.CurrentRow.Selected = true;
+
+            }
         }
     }
 }
