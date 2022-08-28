@@ -124,10 +124,12 @@ namespace ToDoApp
                 
             try
             {
-                int rowIndex = dataGridView1.CurrentCell.RowIndex;
-                cmd.CommandText = "UPDATE ToDoList SET isDeleted = 1 WHERE date = @date";
+                
+                cmd.CommandText = "UPDATE ToDoList SET isDeleted = 1 WHERE id = @id";
                 cmd.Prepare();
-                cmd.Parameters.AddWithValue("@date", rowIndex);
+                var rowIndex = dataGridView1.CurrentCell.RowIndex;
+                //var columnIndex = dataGridView1.CurrentCell.ColumnIndex;
+                cmd.Parameters.AddWithValue("@id", dataGridView1.Rows[rowIndex].Cells[0].Value);
                 cmd.ExecuteNonQuery();
                 dataGridView1.Rows.Clear();
                 ShowData();
@@ -148,9 +150,11 @@ namespace ToDoApp
             var cmd = new SQLiteCommand(con);
             try
             {
-                cmd.CommandText = "UPDATE ToDoList SET due_date = 'Completed' WHERE date = @date";
+                cmd.CommandText = "UPDATE ToDoList SET due_date = 'Completed' WHERE id = @id";
                 cmd.Prepare();
-                cmd.Parameters.AddWithValue("@date", textBox_date.Text);
+                var rowIndex = dataGridView1.CurrentCell.RowIndex;
+                cmd.Parameters.AddWithValue("@id", dataGridView1.Rows[rowIndex].Cells[0].Value);
+               
                 cmd.ExecuteNonQuery();
                 dataGridView1.Rows.Clear();
                 ShowData();
@@ -174,9 +178,11 @@ namespace ToDoApp
             var cmd = new SQLiteCommand(con);
             try
             {
-                cmd.CommandText = "UPDATE ToDoList SET postponeTimes = postponeTimes + 1, due_date = @due_date WHERE date = @date";
+                cmd.CommandText = "UPDATE ToDoList SET postponeTimes = postponeTimes + 1, due_date = @due_date WHERE id = @id";
                 cmd.Prepare();
-                cmd.Parameters.AddWithValue("@date", textBox_date.Text);
+                //cmd.Parameters.AddWithValue("@date", textBox_date.Text);
+                var rowIndex = dataGridView1.CurrentCell.RowIndex;
+                cmd.Parameters.AddWithValue("@id", dataGridView1.Rows[rowIndex].Cells[0].Value);
                 cmd.Parameters.AddWithValue("@due_date", maskedTextBox1.Text);
                 cmd.ExecuteNonQuery();
                 dataGridView1.Rows.Clear();
