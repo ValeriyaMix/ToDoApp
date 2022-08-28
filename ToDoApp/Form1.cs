@@ -71,8 +71,10 @@ namespace ToDoApp
         {
             TableCreation();
             ShowData();
-            textBox_date_TextChanged(sender, e);
             
+
+            maskedTextBox2.Text = DateTime.Now.ToString("dd/MM/yy");
+
 
         }
 
@@ -85,24 +87,29 @@ namespace ToDoApp
 
             try
             {
+                
                 cmd.CommandText = "INSERT INTO ToDoList(date, due_date, task, category) " +
-                "VALUES (@date, @due_date, @task, @category)";
+                "VALUES (@date, @due_date, @task, @category) returning id";
 
-                string DATE = textBox_date.Text;
+                string DATE = maskedTextBox2.Text;
                 string TASK = textBox_task.Text;
                 string CATEGORY = textBox_category.Text;
                 string DUE_DATE = maskedTextBox1.Text;
+               
 
                 cmd.Parameters.AddWithValue("@date", DATE);
+                cmd.Parameters.AddWithValue("@due_date", DUE_DATE);
                 cmd.Parameters.AddWithValue("@task", TASK);
                 cmd.Parameters.AddWithValue("@category", CATEGORY);
-                cmd.Parameters.AddWithValue("@due_date", DUE_DATE);
+                
+                int id = Convert.ToInt32(cmd.ExecuteScalar());
 
-                cmd.ExecuteNonQuery();
-                dataGridView1.Rows.Clear();
-                ShowData();
+                string[] row = new string[] { Convert.ToString(id), DATE, DUE_DATE, TASK, CATEGORY  };
+                dataGridView1.Rows.Insert(0, row);
 
-                textBox_date.Text = String.Empty;
+
+
+                maskedTextBox2.Text = String.Empty;
                 maskedTextBox1.Text = String.Empty;
                 textBox_task.Text = String.Empty;
                 textBox_category.Text = String.Empty;
@@ -131,9 +138,9 @@ namespace ToDoApp
                 //var columnIndex = dataGridView1.CurrentCell.ColumnIndex;
                 cmd.Parameters.AddWithValue("@id", dataGridView1.Rows[rowIndex].Cells[0].Value);
                 cmd.ExecuteNonQuery();
-                dataGridView1.Rows.Clear();
-                ShowData();
-                textBox_date.Text = String.Empty;
+                dataGridView1.Rows.RemoveAt(rowIndex);
+
+                maskedTextBox2.Text = String.Empty;
                     
             }
             catch (Exception)
@@ -156,9 +163,9 @@ namespace ToDoApp
                 cmd.Parameters.AddWithValue("@id", dataGridView1.Rows[rowIndex].Cells[0].Value);
                
                 cmd.ExecuteNonQuery();
-                dataGridView1.Rows.Clear();
-                ShowData();
-                textBox_date.Text = String.Empty;
+                dataGridView1.Rows[rowIndex].Cells[2].Value = "Completed";
+                //ShowData();
+                maskedTextBox2.Text = String.Empty;
                 maskedTextBox1.Text = String.Empty;
                 textBox_task.Text = String.Empty;
                 textBox_category.Text = String.Empty;
@@ -185,9 +192,9 @@ namespace ToDoApp
                 cmd.Parameters.AddWithValue("@id", dataGridView1.Rows[rowIndex].Cells[0].Value);
                 cmd.Parameters.AddWithValue("@due_date", maskedTextBox1.Text);
                 cmd.ExecuteNonQuery();
-                dataGridView1.Rows.Clear();
-                ShowData();
-                textBox_date.Text = String.Empty;
+                dataGridView1.Rows[rowIndex].Cells[2].Value = maskedTextBox1.Text;
+
+                maskedTextBox2.Text = String.Empty;
                 maskedTextBox1.Text = String.Empty;
                 textBox_task.Text = String.Empty;
                 textBox_category.Text = String.Empty;
@@ -214,7 +221,7 @@ namespace ToDoApp
         private void textBox_date_TextChanged(object sender, EventArgs e)
         {
             
-            textBox_date.Text = DateTime.Now.ToString("dd/MM/yy");
+            
             
         }
 
