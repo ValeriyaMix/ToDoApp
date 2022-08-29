@@ -37,8 +37,32 @@ namespace ToDoApp
 
             while (dr.Read())
             {
-                dataGridView1.Rows.Insert(0, dr["id"], dr["date"], dr["due_date"], dr["task"], dr["category"]);
+                dataGridView1.Rows.Insert(0, dr["id"], dr["status"], dr["date"], dr["due_date"], dr["task"], dr["category"]);
+                
             }
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                if (row.Cells[1].Value != null)
+                {
+                    //MessageBox.Show(Convert.ToString(row.Cells[1].Value));
+                   /* if (Convert.ToString(row.Cells[1].Value) == "Completed")
+                    {
+                        row.DefaultCellStyle.BackColor = Color.Green;     
+                    }
+                    else if(Convert.ToString(row.Cells[1].Value) == "Postponed")
+                    {
+                        row.DefaultCellStyle.BackColor = Color.Yellow;
+                    }*/
+
+
+                }
+                    
+                /*{
+                    MessageBox.Show(Convert.ToString(DateTime.ParseExact(DateTime.Now.ToString("dd/MM/yy"), "dd/MM/yy", null)));
+                }*/
+                    
+            }
+
         }
 
         private void TableCreation()
@@ -52,7 +76,7 @@ namespace ToDoApp
                     sqlite.Open();
 
 
-                    string sql = @"CREATE TABLE TodoList(id INTEGER PRIMARY KEY,
+                    string sql = @"CREATE TABLE TodoList(id INTEGER PRIMARY KEY, status TEXT,
             date TEXT, due_date TEXT, task TEXT, category TEXT, postponeTimes INT DEFAULT 0, isDeleted INT DEFAULT 0)";
                     SQLiteCommand command = new SQLiteCommand(sql, sqlite);
                     command.ExecuteNonQuery();
@@ -74,6 +98,28 @@ namespace ToDoApp
             
 
             maskedTextBox2.Text = DateTime.Now.ToString("dd/MM/yy");
+            
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                if (row.Cells[1].Value != null)
+                {
+                    
+                    if (Convert.ToString(row.Cells[1].Value) == "Completed")
+                    {
+                        row.DefaultCellStyle.BackColor = Color.Green;
+                    }
+                    else if (Convert.ToString(row.Cells[1].Value) == "Postponed")
+                    {
+                        row.DefaultCellStyle.BackColor = Color.Yellow;
+                    }
+
+
+                }
+            }
+
+
+
+
 
 
         }
@@ -88,15 +134,17 @@ namespace ToDoApp
             try
             {
                 
-                cmd.CommandText = "INSERT INTO ToDoList(date, due_date, task, category) " +
-                "VALUES (@date, @due_date, @task, @category) returning id";
+                cmd.CommandText = "INSERT INTO ToDoList(status, date, due_date, task, category) " +
+                "VALUES (@status, @date, @due_date, @task, @category) returning id";
 
+                string STATUS = "in progress";
                 string DATE = maskedTextBox2.Text;
                 string TASK = textBox_task.Text;
                 string CATEGORY = textBox_category.Text;
                 string DUE_DATE = maskedTextBox1.Text;
-               
 
+
+                cmd.Parameters.AddWithValue("@status", STATUS);
                 cmd.Parameters.AddWithValue("@date", DATE);
                 cmd.Parameters.AddWithValue("@due_date", DUE_DATE);
                 cmd.Parameters.AddWithValue("@task", TASK);
@@ -104,7 +152,7 @@ namespace ToDoApp
                 
                 int id = Convert.ToInt32(cmd.ExecuteScalar());
 
-                string[] row = new string[] { Convert.ToString(id), DATE, DUE_DATE, TASK, CATEGORY  };
+                string[] row = new string[] { Convert.ToString(id), STATUS, DATE, DUE_DATE, TASK, CATEGORY  };
                 dataGridView1.Rows.Insert(0, row);
 
 
@@ -135,7 +183,7 @@ namespace ToDoApp
                 cmd.CommandText = "UPDATE ToDoList SET isDeleted = 1 WHERE id = @id";
                 cmd.Prepare();
                 var rowIndex = dataGridView1.CurrentCell.RowIndex;
-                //var columnIndex = dataGridView1.CurrentCell.ColumnIndex;
+                
                 cmd.Parameters.AddWithValue("@id", dataGridView1.Rows[rowIndex].Cells[0].Value);
                 cmd.ExecuteNonQuery();
                 dataGridView1.Rows.RemoveAt(rowIndex);
@@ -157,14 +205,17 @@ namespace ToDoApp
             var cmd = new SQLiteCommand(con);
             try
             {
-                cmd.CommandText = "UPDATE ToDoList SET due_date = 'Completed' WHERE id = @id";
+                cmd.CommandText = "UPDATE ToDoList SET status = 'Completed' WHERE id = @id";
                 cmd.Prepare();
                 var rowIndex = dataGridView1.CurrentCell.RowIndex;
                 cmd.Parameters.AddWithValue("@id", dataGridView1.Rows[rowIndex].Cells[0].Value);
-               
+
                 cmd.ExecuteNonQuery();
-                dataGridView1.Rows[rowIndex].Cells[2].Value = "Completed";
-                //ShowData();
+                
+                dataGridView1.Rows[rowIndex].Cells[1].Value = "Completed";
+                dataGridView1.Rows[rowIndex].DefaultCellStyle.BackColor = Color.Green;
+
+
                 maskedTextBox2.Text = String.Empty;
                 maskedTextBox1.Text = String.Empty;
                 textBox_task.Text = String.Empty;
@@ -185,14 +236,16 @@ namespace ToDoApp
             var cmd = new SQLiteCommand(con);
             try
             {
-                cmd.CommandText = "UPDATE ToDoList SET postponeTimes = postponeTimes + 1, due_date = @due_date WHERE id = @id";
+                cmd.CommandText = "UPDATE ToDoList SET status = 'Postponed', postponeTimes = postponeTimes + 1, due_date = @due_date WHERE id = @id";
                 cmd.Prepare();
-                //cmd.Parameters.AddWithValue("@date", textBox_date.Text);
+                
                 var rowIndex = dataGridView1.CurrentCell.RowIndex;
                 cmd.Parameters.AddWithValue("@id", dataGridView1.Rows[rowIndex].Cells[0].Value);
                 cmd.Parameters.AddWithValue("@due_date", maskedTextBox1.Text);
                 cmd.ExecuteNonQuery();
-                dataGridView1.Rows[rowIndex].Cells[2].Value = maskedTextBox1.Text;
+                dataGridView1.Rows[rowIndex].Cells[3].Value = maskedTextBox1.Text;
+                dataGridView1.Rows[rowIndex].Cells[1].Value = "Postponed";
+                dataGridView1.Rows[rowIndex].DefaultCellStyle.BackColor = Color.Yellow;
 
                 maskedTextBox2.Text = String.Empty;
                 maskedTextBox1.Text = String.Empty;
@@ -232,6 +285,11 @@ namespace ToDoApp
                 dataGridView1.CurrentRow.Selected = true;
 
             }
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }
