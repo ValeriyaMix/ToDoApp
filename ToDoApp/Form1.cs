@@ -55,10 +55,20 @@ namespace ToDoApp
                         row.DefaultCellStyle.BackColor = Color.Yellow;
                     }
 
+                    DateTime currentDate = DateTime.ParseExact(DateTime.Now.ToString("dd/MM/yy"), "dd/MM/yy", null);
+                    DateTime tableDate = Convert.ToDateTime(row.Cells[3].Value);
+                    //Add date validation
+                    int res = DateTime.Compare(currentDate, tableDate);
+
+                    if (res != -1 && Convert.ToString(row.Cells[1].Value) != "Completed")
+                    {
+                        row.DefaultCellStyle.BackColor = Color.Red;
+
+                    }
+
 
                 }
             }
-                //MessageBox.Show(Convert.ToString(DateTime.ParseExact(DateTime.Now.ToString("dd/MM/yy"), "dd/MM/yy", null)));
 
         }
 
@@ -222,6 +232,16 @@ namespace ToDoApp
                 dataGridView1.Rows[rowIndex].Cells[1].Value = "Postponed";
                 dataGridView1.Rows[rowIndex].DefaultCellStyle.BackColor = Color.Yellow;
 
+                DateTime currentDate = DateTime.ParseExact(DateTime.Now.ToString("dd/MM/yy"), "dd/MM/yy", null);
+                DateTime tableDate = Convert.ToDateTime(dataGridView1.Rows[rowIndex].Cells[3].Value);
+                int res = DateTime.Compare(currentDate, tableDate);
+
+                if (res != -1 && Convert.ToString(dataGridView1.Rows[rowIndex].Cells[1].Value) != "Completed")
+                {
+                    dataGridView1.Rows[rowIndex].DefaultCellStyle.BackColor = Color.Red;
+                    
+                }
+
                 maskedTextBox2_SetDate.Text = String.Empty;
                 maskedTextBox1_DueDate.Text = String.Empty;
                 textBox_task.Text = String.Empty;
@@ -246,24 +266,22 @@ namespace ToDoApp
 
         }
 
-        private void textBox_date_TextChanged(object sender, EventArgs e)
-        {
-            
-            
-            
-        }
-
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (dataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
             {
                 dataGridView1.CurrentRow.Selected = true;
+                maskedTextBox2_SetDate.Text = dataGridView1.Rows[e.RowIndex].Cells["date"].FormattedValue.ToString();
+                maskedTextBox1_DueDate.Text = dataGridView1.Rows[e.RowIndex].Cells["due_date"].FormattedValue.ToString();
+                textBox_task.Text = dataGridView1.Rows[e.RowIndex].Cells["task"].FormattedValue.ToString();
+                textBox_category.Text = dataGridView1.Rows[e.RowIndex].Cells["category"].FormattedValue.ToString();
 
             }
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+
 
         }
 
