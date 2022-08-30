@@ -42,26 +42,23 @@ namespace ToDoApp
             }
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
+
                 if (row.Cells[1].Value != null)
                 {
-                    //MessageBox.Show(Convert.ToString(row.Cells[1].Value));
-                   /* if (Convert.ToString(row.Cells[1].Value) == "Completed")
+
+                    if (Convert.ToString(row.Cells[1].Value) == "Completed")
                     {
-                        row.DefaultCellStyle.BackColor = Color.Green;     
+                        row.DefaultCellStyle.BackColor = Color.Green;
                     }
-                    else if(Convert.ToString(row.Cells[1].Value) == "Postponed")
+                    else if (Convert.ToString(row.Cells[1].Value) == "Postponed")
                     {
                         row.DefaultCellStyle.BackColor = Color.Yellow;
-                    }*/
+                    }
 
 
                 }
-                    
-                /*{
-                    MessageBox.Show(Convert.ToString(DateTime.ParseExact(DateTime.Now.ToString("dd/MM/yy"), "dd/MM/yy", null)));
-                }*/
-                    
             }
+                //MessageBox.Show(Convert.ToString(DateTime.ParseExact(DateTime.Now.ToString("dd/MM/yy"), "dd/MM/yy", null)));
 
         }
 
@@ -97,34 +94,12 @@ namespace ToDoApp
             ShowData();
             
 
-            maskedTextBox2.Text = DateTime.Now.ToString("dd/MM/yy");
-            
-            foreach (DataGridViewRow row in dataGridView1.Rows)
-            {
-                if (row.Cells[1].Value != null)
-                {
-                    
-                    if (Convert.ToString(row.Cells[1].Value) == "Completed")
-                    {
-                        row.DefaultCellStyle.BackColor = Color.Green;
-                    }
-                    else if (Convert.ToString(row.Cells[1].Value) == "Postponed")
-                    {
-                        row.DefaultCellStyle.BackColor = Color.Yellow;
-                    }
-
-
-                }
-            }
-
-
-
-
+            maskedTextBox2_SetDate.Text = DateTime.Now.ToString("dd/MM/yy");
 
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void button1_AddTask_Click(object sender, EventArgs e)
         {
             var con = new SQLiteConnection(cs);
             con.Open();
@@ -138,10 +113,10 @@ namespace ToDoApp
                 "VALUES (@status, @date, @due_date, @task, @category) returning id";
 
                 string STATUS = "in progress";
-                string DATE = maskedTextBox2.Text;
+                string DATE = maskedTextBox2_SetDate.Text;
                 string TASK = textBox_task.Text;
                 string CATEGORY = textBox_category.Text;
-                string DUE_DATE = maskedTextBox1.Text;
+                string DUE_DATE = maskedTextBox1_DueDate.Text;
 
 
                 cmd.Parameters.AddWithValue("@status", STATUS);
@@ -157,8 +132,8 @@ namespace ToDoApp
 
 
 
-                maskedTextBox2.Text = String.Empty;
-                maskedTextBox1.Text = String.Empty;
+                maskedTextBox2_SetDate.Text = String.Empty;
+                maskedTextBox1_DueDate.Text = String.Empty;
                 textBox_task.Text = String.Empty;
                 textBox_category.Text = String.Empty;
             }
@@ -169,7 +144,7 @@ namespace ToDoApp
             }
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private void button4_DeleteTask_Click(object sender, EventArgs e)
         {
             var con = new SQLiteConnection(cs);
             con.Open();
@@ -188,7 +163,7 @@ namespace ToDoApp
                 cmd.ExecuteNonQuery();
                 dataGridView1.Rows.RemoveAt(rowIndex);
 
-                maskedTextBox2.Text = String.Empty;
+                maskedTextBox2_SetDate.Text = String.Empty;
                     
             }
             catch (Exception)
@@ -197,7 +172,7 @@ namespace ToDoApp
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void button2_CompleteTask_Click(object sender, EventArgs e)
         {
             var con = new SQLiteConnection(cs);
             con.Open();
@@ -216,8 +191,8 @@ namespace ToDoApp
                 dataGridView1.Rows[rowIndex].DefaultCellStyle.BackColor = Color.Green;
 
 
-                maskedTextBox2.Text = String.Empty;
-                maskedTextBox1.Text = String.Empty;
+                maskedTextBox2_SetDate.Text = String.Empty;
+                maskedTextBox1_DueDate.Text = String.Empty;
                 textBox_task.Text = String.Empty;
                 textBox_category.Text = String.Empty;
             }
@@ -228,7 +203,7 @@ namespace ToDoApp
 
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void button3_PostponeTask_Click(object sender, EventArgs e)
         {
             var con = new SQLiteConnection(cs);
             con.Open();
@@ -241,14 +216,14 @@ namespace ToDoApp
                 
                 var rowIndex = dataGridView1.CurrentCell.RowIndex;
                 cmd.Parameters.AddWithValue("@id", dataGridView1.Rows[rowIndex].Cells[0].Value);
-                cmd.Parameters.AddWithValue("@due_date", maskedTextBox1.Text);
+                cmd.Parameters.AddWithValue("@due_date", maskedTextBox1_DueDate.Text);
                 cmd.ExecuteNonQuery();
-                dataGridView1.Rows[rowIndex].Cells[3].Value = maskedTextBox1.Text;
+                dataGridView1.Rows[rowIndex].Cells[3].Value = maskedTextBox1_DueDate.Text;
                 dataGridView1.Rows[rowIndex].Cells[1].Value = "Postponed";
                 dataGridView1.Rows[rowIndex].DefaultCellStyle.BackColor = Color.Yellow;
 
-                maskedTextBox2.Text = String.Empty;
-                maskedTextBox1.Text = String.Empty;
+                maskedTextBox2_SetDate.Text = String.Empty;
+                maskedTextBox1_DueDate.Text = String.Empty;
                 textBox_task.Text = String.Empty;
                 textBox_category.Text = String.Empty;
 
@@ -290,6 +265,34 @@ namespace ToDoApp
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void button5_FilterTasks_Click(object sender, EventArgs e)
+        {
+            for (int u = 0; u < dataGridView1.RowCount; u++)
+            {
+                if (dataGridView1.Rows[u].Cells[1].Value != null)
+                {
+                    if (Convert.ToString(dataGridView1.Rows[u].Cells[1].Value).ToLower() != Convert.ToString(textBox_filter.Text).ToLower())
+                    {
+                        dataGridView1.Rows[u].Visible = false;
+                    }
+                    else
+                    {
+                        dataGridView1.Rows[u].Visible = true;
+                    }
+                }
+                    
+            }
+            textBox_filter.Clear();
+            
+        }
+
+        private void button5_LoadTasks_Click(object sender, EventArgs e)
+        {
+            dataGridView1.Rows.Clear();
+
+            ShowData();
         }
     }
 }

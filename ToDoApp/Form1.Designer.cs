@@ -28,78 +28,88 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
+            this.button1_AddTask = new System.Windows.Forms.Button();
+            this.button2_CompleteTask = new System.Windows.Forms.Button();
+            this.button3_PostponeTask = new System.Windows.Forms.Button();
+            this.button4_DeleteTask = new System.Windows.Forms.Button();
             this.textBox_task = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.textBox_category = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.maskedTextBox1 = new System.Windows.Forms.MaskedTextBox();
-            this.maskedTextBox2 = new System.Windows.Forms.MaskedTextBox();
             this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.status = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.date = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.due_date = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.task = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.category = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.textBox_category = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.maskedTextBox1_DueDate = new System.Windows.Forms.MaskedTextBox();
+            this.maskedTextBox2_SetDate = new System.Windows.Forms.MaskedTextBox();
+            this.textBox_filter = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.button5_FilterTasks = new System.Windows.Forms.Button();
+            this.button5_LoadTasks = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
-            // button1
+            // button1_AddTask
             // 
-            this.button1.BackColor = System.Drawing.Color.BlueViolet;
-            this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(66, 549);
-            this.button1.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(173, 89);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Add";
-            this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.button1_AddTask.BackColor = System.Drawing.Color.BlueViolet;
+            this.button1_AddTask.ForeColor = System.Drawing.Color.White;
+            this.button1_AddTask.Location = new System.Drawing.Point(450, 626);
+            this.button1_AddTask.Margin = new System.Windows.Forms.Padding(5);
+            this.button1_AddTask.Name = "button1_AddTask";
+            this.button1_AddTask.Size = new System.Drawing.Size(140, 60);
+            this.button1_AddTask.TabIndex = 0;
+            this.button1_AddTask.Text = "Add";
+            this.button1_AddTask.UseVisualStyleBackColor = false;
+            this.button1_AddTask.Click += new System.EventHandler(this.button1_AddTask_Click);
             // 
-            // button2
+            // button2_CompleteTask
             // 
-            this.button2.Location = new System.Drawing.Point(509, 555);
-            this.button2.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(173, 82);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "Complete";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.button2_CompleteTask.BackColor = System.Drawing.Color.BlueViolet;
+            this.button2_CompleteTask.ForeColor = System.Drawing.Color.White;
+            this.button2_CompleteTask.Location = new System.Drawing.Point(650, 626);
+            this.button2_CompleteTask.Margin = new System.Windows.Forms.Padding(5);
+            this.button2_CompleteTask.Name = "button2_CompleteTask";
+            this.button2_CompleteTask.Size = new System.Drawing.Size(140, 60);
+            this.button2_CompleteTask.TabIndex = 1;
+            this.button2_CompleteTask.Text = "Complete";
+            this.button2_CompleteTask.UseVisualStyleBackColor = false;
+            this.button2_CompleteTask.Click += new System.EventHandler(this.button2_CompleteTask_Click);
             // 
-            // button3
+            // button3_PostponeTask
             // 
-            this.button3.Location = new System.Drawing.Point(751, 555);
-            this.button3.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(163, 82);
-            this.button3.TabIndex = 2;
-            this.button3.Text = "Postpone";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.button3_PostponeTask.BackColor = System.Drawing.Color.BlueViolet;
+            this.button3_PostponeTask.ForeColor = System.Drawing.Color.White;
+            this.button3_PostponeTask.Location = new System.Drawing.Point(850, 626);
+            this.button3_PostponeTask.Margin = new System.Windows.Forms.Padding(5);
+            this.button3_PostponeTask.Name = "button3_PostponeTask";
+            this.button3_PostponeTask.Size = new System.Drawing.Size(140, 60);
+            this.button3_PostponeTask.TabIndex = 2;
+            this.button3_PostponeTask.Text = "Postpone";
+            this.button3_PostponeTask.UseVisualStyleBackColor = false;
+            this.button3_PostponeTask.Click += new System.EventHandler(this.button3_PostponeTask_Click);
             // 
-            // button4
+            // button4_DeleteTask
             // 
-            this.button4.Location = new System.Drawing.Point(998, 560);
-            this.button4.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(162, 78);
-            this.button4.TabIndex = 3;
-            this.button4.Text = "Delete";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
+            this.button4_DeleteTask.BackColor = System.Drawing.Color.BlueViolet;
+            this.button4_DeleteTask.ForeColor = System.Drawing.Color.White;
+            this.button4_DeleteTask.Location = new System.Drawing.Point(1045, 626);
+            this.button4_DeleteTask.Margin = new System.Windows.Forms.Padding(5);
+            this.button4_DeleteTask.Name = "button4_DeleteTask";
+            this.button4_DeleteTask.Size = new System.Drawing.Size(140, 60);
+            this.button4_DeleteTask.TabIndex = 3;
+            this.button4_DeleteTask.Text = "Delete";
+            this.button4_DeleteTask.UseVisualStyleBackColor = false;
+            this.button4_DeleteTask.Click += new System.EventHandler(this.button4_DeleteTask_Click);
             // 
             // textBox_task
             // 
             this.textBox_task.Location = new System.Drawing.Point(14, 255);
-            this.textBox_task.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.textBox_task.Margin = new System.Windows.Forms.Padding(5);
             this.textBox_task.Multiline = true;
             this.textBox_task.Name = "textBox_task";
             this.textBox_task.Size = new System.Drawing.Size(371, 169);
@@ -126,73 +136,15 @@
             this.task,
             this.category});
             this.dataGridView1.Location = new System.Drawing.Point(394, 82);
-            this.dataGridView1.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(5);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 24;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(788, 425);
+            this.dataGridView1.Size = new System.Drawing.Size(788, 503);
             this.dataGridView1.TabIndex = 8;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
-            // 
-            // textBox_category
-            // 
-            this.textBox_category.Location = new System.Drawing.Point(17, 474);
-            this.textBox_category.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
-            this.textBox_category.Name = "textBox_category";
-            this.textBox_category.Size = new System.Drawing.Size(371, 30);
-            this.textBox_category.TabIndex = 10;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(20, 48);
-            this.label2.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(130, 25);
-            this.label2.TabIndex = 11;
-            this.label2.Text = "Task set date";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(22, 439);
-            this.label3.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(136, 25);
-            this.label3.TabIndex = 12;
-            this.label3.Text = "Task category";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(17, 136);
-            this.label4.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(137, 25);
-            this.label4.TabIndex = 14;
-            this.label4.Text = "Task due date";
-            // 
-            // maskedTextBox1
-            // 
-            this.maskedTextBox1.Location = new System.Drawing.Point(12, 178);
-            this.maskedTextBox1.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
-            this.maskedTextBox1.Mask = "00/00/00";
-            this.maskedTextBox1.Name = "maskedTextBox1";
-            this.maskedTextBox1.Size = new System.Drawing.Size(371, 30);
-            this.maskedTextBox1.TabIndex = 15;
-            this.maskedTextBox1.ValidatingType = typeof(System.DateTime);
-            // 
-            // maskedTextBox2
-            // 
-            this.maskedTextBox2.Location = new System.Drawing.Point(13, 82);
-            this.maskedTextBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.maskedTextBox2.Mask = "00/00/00";
-            this.maskedTextBox2.Name = "maskedTextBox2";
-            this.maskedTextBox2.Size = new System.Drawing.Size(371, 30);
-            this.maskedTextBox2.TabIndex = 16;
-            this.maskedTextBox2.ValidatingType = typeof(System.DateTime);
             // 
             // id
             // 
@@ -227,23 +179,126 @@
             this.task.HeaderText = "Task";
             this.task.MinimumWidth = 6;
             this.task.Name = "task";
-            this.task.Width = 150;
+            this.task.Width = 200;
             // 
             // category
             // 
             this.category.HeaderText = "Taskcategory";
             this.category.MinimumWidth = 6;
             this.category.Name = "category";
-            this.category.Width = 135;
+            this.category.Width = 150;
+            // 
+            // textBox_category
+            // 
+            this.textBox_category.Location = new System.Drawing.Point(17, 474);
+            this.textBox_category.Margin = new System.Windows.Forms.Padding(5);
+            this.textBox_category.Name = "textBox_category";
+            this.textBox_category.Size = new System.Drawing.Size(371, 30);
+            this.textBox_category.TabIndex = 10;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(20, 48);
+            this.label2.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(130, 25);
+            this.label2.TabIndex = 11;
+            this.label2.Text = "Task set date";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(22, 439);
+            this.label3.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(136, 25);
+            this.label3.TabIndex = 12;
+            this.label3.Text = "Task category";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(17, 136);
+            this.label4.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(137, 25);
+            this.label4.TabIndex = 14;
+            this.label4.Text = "Task due date";
+            // 
+            // maskedTextBox1_DueDate
+            // 
+            this.maskedTextBox1_DueDate.Location = new System.Drawing.Point(12, 178);
+            this.maskedTextBox1_DueDate.Margin = new System.Windows.Forms.Padding(5);
+            this.maskedTextBox1_DueDate.Mask = "00/00/00";
+            this.maskedTextBox1_DueDate.Name = "maskedTextBox1_DueDate";
+            this.maskedTextBox1_DueDate.Size = new System.Drawing.Size(371, 30);
+            this.maskedTextBox1_DueDate.TabIndex = 15;
+            this.maskedTextBox1_DueDate.ValidatingType = typeof(System.DateTime);
+            // 
+            // maskedTextBox2_SetDate
+            // 
+            this.maskedTextBox2_SetDate.Location = new System.Drawing.Point(13, 82);
+            this.maskedTextBox2_SetDate.Margin = new System.Windows.Forms.Padding(4);
+            this.maskedTextBox2_SetDate.Mask = "00/00/00";
+            this.maskedTextBox2_SetDate.Name = "maskedTextBox2_SetDate";
+            this.maskedTextBox2_SetDate.Size = new System.Drawing.Size(371, 30);
+            this.maskedTextBox2_SetDate.TabIndex = 16;
+            this.maskedTextBox2_SetDate.ValidatingType = typeof(System.DateTime);
+            // 
+            // textBox_filter
+            // 
+            this.textBox_filter.Location = new System.Drawing.Point(14, 555);
+            this.textBox_filter.Name = "textBox_filter";
+            this.textBox_filter.Size = new System.Drawing.Size(374, 30);
+            this.textBox_filter.TabIndex = 17;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(17, 519);
+            this.label5.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(178, 25);
+            this.label5.TabIndex = 18;
+            this.label5.Text = "Filter by task status";
+            // 
+            // button5_FilterTasks
+            // 
+            this.button5_FilterTasks.BackColor = System.Drawing.Color.BlueViolet;
+            this.button5_FilterTasks.ForeColor = System.Drawing.Color.White;
+            this.button5_FilterTasks.Location = new System.Drawing.Point(245, 626);
+            this.button5_FilterTasks.Name = "button5_FilterTasks";
+            this.button5_FilterTasks.Size = new System.Drawing.Size(140, 60);
+            this.button5_FilterTasks.TabIndex = 19;
+            this.button5_FilterTasks.Text = "Filter";
+            this.button5_FilterTasks.UseVisualStyleBackColor = false;
+            this.button5_FilterTasks.Click += new System.EventHandler(this.button5_FilterTasks_Click);
+            // 
+            // button5_LoadTasks
+            // 
+            this.button5_LoadTasks.BackColor = System.Drawing.Color.BlueViolet;
+            this.button5_LoadTasks.ForeColor = System.Drawing.Color.White;
+            this.button5_LoadTasks.Location = new System.Drawing.Point(40, 626);
+            this.button5_LoadTasks.Name = "button5_LoadTasks";
+            this.button5_LoadTasks.Size = new System.Drawing.Size(140, 60);
+            this.button5_LoadTasks.TabIndex = 20;
+            this.button5_LoadTasks.Text = "Load Tasks";
+            this.button5_LoadTasks.UseVisualStyleBackColor = false;
+            this.button5_LoadTasks.Click += new System.EventHandler(this.button5_LoadTasks_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
-            this.ClientSize = new System.Drawing.Size(1200, 702);
-            this.Controls.Add(this.maskedTextBox2);
-            this.Controls.Add(this.maskedTextBox1);
+            this.ClientSize = new System.Drawing.Size(1200, 723);
+            this.Controls.Add(this.button5_LoadTasks);
+            this.Controls.Add(this.button5_FilterTasks);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.textBox_filter);
+            this.Controls.Add(this.maskedTextBox2_SetDate);
+            this.Controls.Add(this.maskedTextBox1_DueDate);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -251,12 +306,12 @@
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox_task);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.button4_DeleteTask);
+            this.Controls.Add(this.button3_PostponeTask);
+            this.Controls.Add(this.button2_CompleteTask);
+            this.Controls.Add(this.button1_AddTask);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.Margin = new System.Windows.Forms.Padding(5);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -268,10 +323,10 @@
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button button1_AddTask;
+        private System.Windows.Forms.Button button2_CompleteTask;
+        private System.Windows.Forms.Button button3_PostponeTask;
+        private System.Windows.Forms.Button button4_DeleteTask;
         private System.Windows.Forms.TextBox textBox_task;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataGridView dataGridView1;
@@ -279,14 +334,18 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.MaskedTextBox maskedTextBox1;
-        private System.Windows.Forms.MaskedTextBox maskedTextBox2;
+        private System.Windows.Forms.MaskedTextBox maskedTextBox1_DueDate;
+        private System.Windows.Forms.MaskedTextBox maskedTextBox2_SetDate;
         private System.Windows.Forms.DataGridViewTextBoxColumn id;
         private System.Windows.Forms.DataGridViewTextBoxColumn status;
         private System.Windows.Forms.DataGridViewTextBoxColumn date;
         private System.Windows.Forms.DataGridViewTextBoxColumn due_date;
         private System.Windows.Forms.DataGridViewTextBoxColumn task;
         private System.Windows.Forms.DataGridViewTextBoxColumn category;
+        private System.Windows.Forms.TextBox textBox_filter;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button button5_FilterTasks;
+        private System.Windows.Forms.Button button5_LoadTasks;
     }
 }
 
