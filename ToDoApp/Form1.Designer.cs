@@ -49,8 +49,6 @@
             this.maskedTextBox2_SetDate = new System.Windows.Forms.MaskedTextBox();
             this.textBox_filter = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.button5_FilterTasks = new System.Windows.Forms.Button();
-            this.button5_LoadTasks = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -58,7 +56,7 @@
             // 
             this.button1_AddTask.BackColor = System.Drawing.Color.BlueViolet;
             this.button1_AddTask.ForeColor = System.Drawing.Color.White;
-            this.button1_AddTask.Location = new System.Drawing.Point(450, 626);
+            this.button1_AddTask.Location = new System.Drawing.Point(14, 541);
             this.button1_AddTask.Margin = new System.Windows.Forms.Padding(5);
             this.button1_AddTask.Name = "button1_AddTask";
             this.button1_AddTask.Size = new System.Drawing.Size(140, 60);
@@ -71,7 +69,7 @@
             // 
             this.button2_CompleteTask.BackColor = System.Drawing.Color.BlueViolet;
             this.button2_CompleteTask.ForeColor = System.Drawing.Color.White;
-            this.button2_CompleteTask.Location = new System.Drawing.Point(650, 626);
+            this.button2_CompleteTask.Location = new System.Drawing.Point(245, 541);
             this.button2_CompleteTask.Margin = new System.Windows.Forms.Padding(5);
             this.button2_CompleteTask.Name = "button2_CompleteTask";
             this.button2_CompleteTask.Size = new System.Drawing.Size(140, 60);
@@ -84,7 +82,7 @@
             // 
             this.button3_PostponeTask.BackColor = System.Drawing.Color.BlueViolet;
             this.button3_PostponeTask.ForeColor = System.Drawing.Color.White;
-            this.button3_PostponeTask.Location = new System.Drawing.Point(850, 626);
+            this.button3_PostponeTask.Location = new System.Drawing.Point(14, 649);
             this.button3_PostponeTask.Margin = new System.Windows.Forms.Padding(5);
             this.button3_PostponeTask.Name = "button3_PostponeTask";
             this.button3_PostponeTask.Size = new System.Drawing.Size(140, 60);
@@ -97,7 +95,7 @@
             // 
             this.button4_DeleteTask.BackColor = System.Drawing.Color.BlueViolet;
             this.button4_DeleteTask.ForeColor = System.Drawing.Color.White;
-            this.button4_DeleteTask.Location = new System.Drawing.Point(1045, 626);
+            this.button4_DeleteTask.Location = new System.Drawing.Point(243, 649);
             this.button4_DeleteTask.Margin = new System.Windows.Forms.Padding(5);
             this.button4_DeleteTask.Name = "button4_DeleteTask";
             this.button4_DeleteTask.Size = new System.Drawing.Size(140, 60);
@@ -248,44 +246,21 @@
             // 
             // textBox_filter
             // 
-            this.textBox_filter.Location = new System.Drawing.Point(14, 555);
+            this.textBox_filter.Location = new System.Drawing.Point(814, 624);
             this.textBox_filter.Name = "textBox_filter";
             this.textBox_filter.Size = new System.Drawing.Size(374, 30);
             this.textBox_filter.TabIndex = 17;
+            this.textBox_filter.TextChanged += new System.EventHandler(this.textBox_filter_TextChanged);
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(17, 519);
+            this.label5.Location = new System.Drawing.Point(814, 592);
             this.label5.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(178, 25);
             this.label5.TabIndex = 18;
             this.label5.Text = "Filter by task status";
-            // 
-            // button5_FilterTasks
-            // 
-            this.button5_FilterTasks.BackColor = System.Drawing.Color.BlueViolet;
-            this.button5_FilterTasks.ForeColor = System.Drawing.Color.White;
-            this.button5_FilterTasks.Location = new System.Drawing.Point(245, 626);
-            this.button5_FilterTasks.Name = "button5_FilterTasks";
-            this.button5_FilterTasks.Size = new System.Drawing.Size(140, 60);
-            this.button5_FilterTasks.TabIndex = 19;
-            this.button5_FilterTasks.Text = "Filter";
-            this.button5_FilterTasks.UseVisualStyleBackColor = false;
-            this.button5_FilterTasks.Click += new System.EventHandler(this.button5_FilterTasks_Click);
-            // 
-            // button5_LoadTasks
-            // 
-            this.button5_LoadTasks.BackColor = System.Drawing.Color.BlueViolet;
-            this.button5_LoadTasks.ForeColor = System.Drawing.Color.White;
-            this.button5_LoadTasks.Location = new System.Drawing.Point(40, 626);
-            this.button5_LoadTasks.Name = "button5_LoadTasks";
-            this.button5_LoadTasks.Size = new System.Drawing.Size(140, 60);
-            this.button5_LoadTasks.TabIndex = 20;
-            this.button5_LoadTasks.Text = "Load Tasks";
-            this.button5_LoadTasks.UseVisualStyleBackColor = false;
-            this.button5_LoadTasks.Click += new System.EventHandler(this.button5_LoadTasks_Click);
             // 
             // Form1
             // 
@@ -293,8 +268,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.ClientSize = new System.Drawing.Size(1200, 723);
-            this.Controls.Add(this.button5_LoadTasks);
-            this.Controls.Add(this.button5_FilterTasks);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.textBox_filter);
             this.Controls.Add(this.maskedTextBox2_SetDate);
@@ -344,8 +317,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn category;
         private System.Windows.Forms.TextBox textBox_filter;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Button button5_FilterTasks;
-        private System.Windows.Forms.Button button5_LoadTasks;
     }
 }
 

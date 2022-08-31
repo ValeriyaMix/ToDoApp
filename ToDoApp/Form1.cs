@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SQLite;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace ToDoApp 
 {
@@ -146,6 +147,7 @@ namespace ToDoApp
                 maskedTextBox1_DueDate.Text = String.Empty;
                 textBox_task.Text = String.Empty;
                 textBox_category.Text = String.Empty;
+                maskedTextBox2_SetDate.Text = DateTime.Now.ToString("dd/MM/yy");
             }
             catch (Exception)
             {
@@ -174,7 +176,11 @@ namespace ToDoApp
                 dataGridView1.Rows.RemoveAt(rowIndex);
 
                 maskedTextBox2_SetDate.Text = String.Empty;
-                    
+                maskedTextBox1_DueDate.Text = String.Empty;
+                textBox_task.Text = String.Empty;
+                textBox_category.Text = String.Empty;
+                maskedTextBox2_SetDate.Text = DateTime.Now.ToString("dd/MM/yy");
+
             }
             catch (Exception)
             {
@@ -205,6 +211,7 @@ namespace ToDoApp
                 maskedTextBox1_DueDate.Text = String.Empty;
                 textBox_task.Text = String.Empty;
                 textBox_category.Text = String.Empty;
+                maskedTextBox2_SetDate.Text = DateTime.Now.ToString("dd/MM/yy");
             }
             catch (Exception)
             {
@@ -246,6 +253,7 @@ namespace ToDoApp
                 maskedTextBox1_DueDate.Text = String.Empty;
                 textBox_task.Text = String.Empty;
                 textBox_category.Text = String.Empty;
+                maskedTextBox2_SetDate.Text = DateTime.Now.ToString("dd/MM/yy");
 
                 cmd.CommandText = "SELECT * FROM ToDoList WHERE postponeTimes >= 3";
                 int checkCmd = Convert.ToInt32(cmd.ExecuteScalar());
@@ -285,32 +293,34 @@ namespace ToDoApp
 
         }
 
-        private void button5_FilterTasks_Click(object sender, EventArgs e)
+
+        private void textBox_filter_TextChanged(object sender, EventArgs e)
         {
-            for (int u = 0; u < dataGridView1.RowCount; u++)
+            if(!String.IsNullOrEmpty(textBox_filter.Text))
             {
-                if (dataGridView1.Rows[u].Cells[1].Value != null)
+                for (int u = 0; u < dataGridView1.RowCount; u++)
                 {
-                    if (Convert.ToString(dataGridView1.Rows[u].Cells[1].Value).ToLower() != Convert.ToString(textBox_filter.Text).ToLower())
+                    if (dataGridView1.Rows[u].Cells[1].Value != null)
                     {
-                        dataGridView1.Rows[u].Visible = false;
+                        if (Convert.ToString(dataGridView1.Rows[u].Cells[1].Value).ToLower() != Convert.ToString(textBox_filter.Text).ToLower())
+                        {
+                            dataGridView1.Rows[u].Visible = false;
+                        }
+                        else
+                        {
+                            dataGridView1.Rows[u].Visible = true;
+                        }
                     }
-                    else
-                    {
-                        dataGridView1.Rows[u].Visible = true;
-                    }
+
                 }
-                    
             }
-            textBox_filter.Clear();
-            
-        }
-
-        private void button5_LoadTasks_Click(object sender, EventArgs e)
-        {
-            dataGridView1.Rows.Clear();
-
-            ShowData();
+            else
+            {
+                for (int u = 0; u < dataGridView1.RowCount; u++)
+                {
+                    dataGridView1.Rows[u].Visible = true;
+                }
+            }
         }
     }
 }
