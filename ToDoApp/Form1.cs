@@ -97,13 +97,42 @@ namespace ToDoApp
             
             
         }
+
+        private void AutoCompleteTextBoxCategory()
+        {
+            textBox_category.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            textBox_filter.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            textBox_category.AutoCompleteSource = AutoCompleteSource.CustomSource;
+            textBox_filter.AutoCompleteSource = AutoCompleteSource.CustomSource;
+            AutoCompleteStringCollection collCat = new AutoCompleteStringCollection();
+            AutoCompleteStringCollection collStat = new AutoCompleteStringCollection();
+            var con = new SQLiteConnection(cs);
+            con.Open();
+
+            string stm = "SELECT * FROM TodoList WHERE isDeleted = 0";
+
+            var cmd = new SQLiteCommand(stm, con);
+            dr = cmd.ExecuteReader();
+
+
+            while (dr.Read())
+            {
+                string categ = dr.GetString(5);
+                string stat = dr.GetString(1);
+                collCat.Add(categ);
+                collStat.Add(stat);
+            }
+
+            textBox_category.AutoCompleteCustomSource = collCat;
+            textBox_filter.AutoCompleteCustomSource = collStat;
+        }
             
 
         private void Form1_Load(object sender, EventArgs e)
         {
             TableCreation();
             ShowData();
-            
+            AutoCompleteTextBoxCategory();
 
             maskedTextBox2_SetDate.Text = DateTime.Now.ToString("dd/MM/yy");
 
@@ -286,13 +315,6 @@ namespace ToDoApp
 
             }
         }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-
-        }
-
 
         private void textBox_filter_TextChanged(object sender, EventArgs e)
         {
