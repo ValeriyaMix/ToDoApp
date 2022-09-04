@@ -58,7 +58,7 @@ namespace ToDoApp
 
                     DateTime currentDate = DateTime.ParseExact(DateTime.Now.ToString("dd/MM/yy"), "dd/MM/yy", null);
                     DateTime tableDate = Convert.ToDateTime(row.Cells[3].Value);
-                    //Add date validation
+                    
                     int res = DateTime.Compare(currentDate, tableDate);
 
                     if (res != -1 && Convert.ToString(row.Cells[1].Value) != "Completed")
@@ -96,6 +96,16 @@ namespace ToDoApp
             }
             
             
+        }
+
+        private bool validateTime(string dateInString)
+        {
+            DateTime temp;
+            if (DateTime.TryParse(dateInString, out temp))
+            {
+                return true;
+            }
+            return false;
         }
 
         private void AutoCompleteTextBoxCategory()
@@ -164,19 +174,26 @@ namespace ToDoApp
                 cmd.Parameters.AddWithValue("@due_date", DUE_DATE);
                 cmd.Parameters.AddWithValue("@task", TASK);
                 cmd.Parameters.AddWithValue("@category", CATEGORY);
+
+                if (!validateTime(DUE_DATE) || (!validateTime(DATE)))
+                {
+                    MessageBox.Show("Please input a valid date");
+                }
+                else
+                {
+                    int id = Convert.ToInt32(cmd.ExecuteScalar());
+
+                    string[] row = new string[] { Convert.ToString(id), STATUS, DATE, DUE_DATE, TASK, CATEGORY };
+                    dataGridView1.Rows.Insert(0, row);
+
+                    maskedTextBox2_SetDate.Text = String.Empty;
+                    maskedTextBox1_DueDate.Text = String.Empty;
+                    textBox_task.Text = String.Empty;
+                    textBox_category.Text = String.Empty;
+                    maskedTextBox2_SetDate.Text = DateTime.Now.ToString("dd/MM/yy");
+                }
+
                 
-                int id = Convert.ToInt32(cmd.ExecuteScalar());
-
-                string[] row = new string[] { Convert.ToString(id), STATUS, DATE, DUE_DATE, TASK, CATEGORY  };
-                dataGridView1.Rows.Insert(0, row);
-
-
-
-                maskedTextBox2_SetDate.Text = String.Empty;
-                maskedTextBox1_DueDate.Text = String.Empty;
-                textBox_task.Text = String.Empty;
-                textBox_category.Text = String.Empty;
-                maskedTextBox2_SetDate.Text = DateTime.Now.ToString("dd/MM/yy");
             }
             catch (Exception)
             {
