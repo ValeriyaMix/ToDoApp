@@ -351,11 +351,11 @@ namespace ToDoApp
         private void tasksFilter_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             
-            if (taskStatus_checkBox.Checked)
+            if (taskStatus_radioButton.Checked)
             { 
                 findMatchDropDown("status");
             }
-            else if (taskCategory_checkBox.Checked)
+            else if (taskCategory_radioButton.Checked)
             {
                 findMatchDropDown("category");
             }
@@ -388,11 +388,10 @@ namespace ToDoApp
             
         }
         
-        private void ifCheckBoxChecked(CheckBox fieldName, CheckBox fieldName2, List<string> listName)
+        private void ifCheckBoxChecked(RadioButton fieldName, RadioButton fieldName2, List<string> listName)
         {
             if (fieldName.Checked)
             {
-                fieldName2.Checked = false;
                 foreach (string item in listName)
                 {
                     tasksFilter_comboBox.Items.Add(item);
@@ -402,20 +401,18 @@ namespace ToDoApp
             }
             else
             {
-                fieldName2.Checked = true;
-
                 tasksFilter_comboBox.Items.Clear();
             }
         }
 
-        private void taskStatus_checkBox_CheckedChanged(object sender, EventArgs e)
+        private void taskStatus_radioButton_CheckedChanged(object sender, EventArgs e)
         {
-            ifCheckBoxChecked(taskStatus_checkBox, taskCategory_checkBox, listStatus);
+            ifCheckBoxChecked(taskStatus_radioButton, taskCategory_radioButton, listStatus);
         }
 
-        private void taskCategory_checkBox_CheckedChanged(object sender, EventArgs e)
+        private void taskCategory_radioButton_CheckedChanged(object sender, EventArgs e)
         {
-            ifCheckBoxChecked(taskCategory_checkBox, taskStatus_checkBox, ListCategory);
+            ifCheckBoxChecked(taskCategory_radioButton, taskStatus_radioButton, ListCategory);
         }
     }
 }
