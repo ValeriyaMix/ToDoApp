@@ -49,6 +49,9 @@
             this.maskedTextBox2_SetDate = new System.Windows.Forms.MaskedTextBox();
             this.textBox_filter = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.tasksFilter_comboBox = new System.Windows.Forms.ComboBox();
+            this.taskStatus_checkBox = new System.Windows.Forms.CheckBox();
+            this.taskCategory_checkBox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -254,12 +257,43 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(814, 592);
+            this.label5.Location = new System.Drawing.Point(571, 639);
             this.label5.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(178, 25);
+            this.label5.Size = new System.Drawing.Size(85, 25);
             this.label5.TabIndex = 18;
-            this.label5.Text = "Filter by task status";
+            this.label5.Text = "Filter by ";
+            // 
+            // tasksFilter_comboBox
+            // 
+            this.tasksFilter_comboBox.FormattingEnabled = true;
+            this.tasksFilter_comboBox.Location = new System.Drawing.Point(814, 676);
+            this.tasksFilter_comboBox.Name = "tasksFilter_comboBox";
+            this.tasksFilter_comboBox.Size = new System.Drawing.Size(374, 33);
+            this.tasksFilter_comboBox.TabIndex = 19;
+            this.tasksFilter_comboBox.SelectedIndexChanged += new System.EventHandler(this.tasksFilter_comboBox_SelectedIndexChanged);
+            // 
+            // taskStatus_checkBox
+            // 
+            this.taskStatus_checkBox.AutoSize = true;
+            this.taskStatus_checkBox.Location = new System.Drawing.Point(662, 624);
+            this.taskStatus_checkBox.Name = "taskStatus_checkBox";
+            this.taskStatus_checkBox.Size = new System.Drawing.Size(127, 29);
+            this.taskStatus_checkBox.TabIndex = 20;
+            this.taskStatus_checkBox.Text = "task status";
+            this.taskStatus_checkBox.UseVisualStyleBackColor = true;
+            this.taskStatus_checkBox.CheckedChanged += new System.EventHandler(this.taskStatus_checkBox_CheckedChanged);
+            // 
+            // taskCategory_checkBox
+            // 
+            this.taskCategory_checkBox.AutoSize = true;
+            this.taskCategory_checkBox.Location = new System.Drawing.Point(662, 659);
+            this.taskCategory_checkBox.Name = "taskCategory_checkBox";
+            this.taskCategory_checkBox.Size = new System.Drawing.Size(150, 29);
+            this.taskCategory_checkBox.TabIndex = 21;
+            this.taskCategory_checkBox.Text = "task category";
+            this.taskCategory_checkBox.UseVisualStyleBackColor = true;
+            this.taskCategory_checkBox.CheckedChanged += new System.EventHandler(this.taskCategory_checkBox_CheckedChanged);
             // 
             // Form1
             // 
@@ -267,6 +301,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.ClientSize = new System.Drawing.Size(1200, 723);
+            this.Controls.Add(this.taskCategory_checkBox);
+            this.Controls.Add(this.taskStatus_checkBox);
+            this.Controls.Add(this.tasksFilter_comboBox);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.textBox_filter);
             this.Controls.Add(this.maskedTextBox2_SetDate);
@@ -316,6 +353,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn category;
         private System.Windows.Forms.TextBox textBox_filter;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ComboBox tasksFilter_comboBox;
+        private System.Windows.Forms.CheckBox taskStatus_checkBox;
+        private System.Windows.Forms.CheckBox taskCategory_checkBox;
     }
 }
 

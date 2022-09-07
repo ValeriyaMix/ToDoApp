@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SQLite;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.Drawing.Text;
 
 namespace ToDoApp 
 {
@@ -20,6 +21,15 @@ namespace ToDoApp
 
         string cs = @"URI=file:" + Application.StartupPath + "\\todo_database.db";
         string path = "todo_database.db";
+
+        List<string> listStatus = new List<string>(new string[] { "in progress", "completed", "postponed", "deleted"});
+        List<string> listCategory = new List<string>();
+
+        public List<string> ListCategory
+        { 
+            get { return listCategory; }
+            set { listCategory = value; }
+        }
 
         public Form1()
         {
@@ -131,10 +141,21 @@ namespace ToDoApp
                 string stat = dr.GetString(1);
                 collCat.Add(categ);
                 collStat.Add(stat);
+                                
             }
-
+            
             textBox_category.AutoCompleteCustomSource = collCat;
             textBox_filter.AutoCompleteCustomSource = collStat;
+
+            for(int i=0; i<collCat.Count; i++)
+            {
+                if (!ListCategory.Contains(collCat[i]))
+                {
+                    ListCategory.Add(collCat[i]);
+                }
+            }
+            
+            
         }
             
 
@@ -143,10 +164,9 @@ namespace ToDoApp
             TableCreation();
             ShowData();
             AutoCompleteTextBoxCategory();
+            tasksFilter_comboBox.Text = "show all tasks";
 
             maskedTextBox2_SetDate.Text = DateTime.Now.ToString("dd/MM/yy");
-
-
         }
 
         private void button1_AddTask_Click(object sender, EventArgs e)
@@ -359,6 +379,93 @@ namespace ToDoApp
                 {
                     dataGridView1.Rows[u].Visible = true;
                 }
+            }
+        }
+
+        private void tasksFilter_comboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+            if (taskStatus_checkBox.Checked)
+            { 
+                findMatchDropDown(1);
+            }
+            else if (taskCategory_checkBox.Checked)
+            {
+                findMatchDropDown(5);
+            }
+            else if(taskStatus_checkBox.Checked && taskCategory_checkBox.Checked)
+            {
+                MessageBox.Show("Only one filter category can be chosen");
+            }
+
+        }
+
+        private void findMatchDropDown(int numFilteringRow)
+        {
+            for (int u = 0; u < dataGridView1.RowCount; u++)
+            {
+                if (dataGridView1.Rows[u].Cells[numFilteringRow].Value != null)
+                {
+                    if (tasksFilter_comboBox.Text == "show all tasks")
+                    {
+                        dataGridView1.Rows[u].Visible = true;
+                    }
+                    else
+                    {
+                        if (Convert.ToString(dataGridView1.Rows[u].Cells[numFilteringRow].Value).ToLower() == Convert.ToString(tasksFilter_comboBox.Text).ToLower())
+                        {
+                            dataGridView1.Rows[u].Visible = true;
+                        }
+                        else
+                        {
+                            dataGridView1.Rows[u].Visible = false;
+                        }
+                    }
+                }
+            }
+            
+        }
+
+        private void taskStatus_checkBox_CheckedChanged(object sender, EventArgs e)
+        {
+            
+            if (taskStatus_checkBox.Checked)
+            {
+                taskCategory_checkBox.Checked = false;
+                foreach (string item in listStatus)
+                {
+                    tasksFilter_comboBox.Items.Add(item);
+                }
+                tasksFilter_comboBox.Items.Add("show all tasks");
+                
+            }
+            else
+            {
+                taskCategory_checkBox.Checked = true;
+
+                tasksFilter_comboBox.Items.Clear();
+            }
+
+
+        }
+
+        private void taskCategory_checkBox_CheckedChanged(object sender, EventArgs e)
+        {
+           
+            if (taskCategory_checkBox.Checked)
+            {
+                taskStatus_checkBox.Checked = false;
+                foreach (string cat in ListCategory)
+                {
+                    tasksFilter_comboBox.Items.Add(cat);
+                }
+                tasksFilter_comboBox.Items.Add("show all tasks");
+
+            }
+            else
+            {
+                taskStatus_checkBox.Checked = true;
+                tasksFilter_comboBox.Items.Clear();
             }
         }
     }
