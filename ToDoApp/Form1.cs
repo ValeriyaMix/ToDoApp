@@ -22,8 +22,11 @@ namespace ToDoApp
         string cs = @"URI=file:" + Application.StartupPath + "\\todo_database.db";
         string path = "todo_database.db";
 
-        List<string> listStatus = new List<string>(new string[] { "in progress", "completed", "postponed", "deleted"});
+        List<string> listStatus = new List<string>(new string[] { "in progress", "completed", "postponed"});
         List<string> listCategory = new List<string>();
+
+        AutoCompleteStringCollection collCat = new AutoCompleteStringCollection();
+        
 
         public List<string> ListCategory
         { 
@@ -50,7 +53,14 @@ namespace ToDoApp
             {
                 dataGridView1.Rows.Insert(0, dr["id"], dr["status"], dr["date"], dr["due_date"], dr["task"], dr["category"]);
                 
+                string categ = dr.GetString(5);
+                collCat.Add(categ);   
             }
+
+        }
+
+        private void changeRowColor()
+        {
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
 
@@ -68,7 +78,7 @@ namespace ToDoApp
 
                     DateTime currentDate = DateTime.ParseExact(DateTime.Now.ToString("dd/MM/yy"), "dd/MM/yy", null);
                     DateTime tableDate = Convert.ToDateTime(row.Cells[3].Value);
-                    
+
                     int res = DateTime.Compare(currentDate, tableDate);
 
                     if (res != -1 && Convert.ToString(row.Cells[1].Value) != "Completed")
@@ -80,7 +90,15 @@ namespace ToDoApp
 
                 }
             }
+        }
 
+        private void setTextBoxesDefault()
+        {
+            maskedTextBox2_SetDate.Text = String.Empty;
+            maskedTextBox1_DueDate.Text = String.Empty;
+            textBox_task.Text = String.Empty;
+            textBox_category.Text = String.Empty;
+            maskedTextBox2_SetDate.Text = DateTime.Now.ToString("dd/MM/yy");
         }
 
         private void TableCreation()
@@ -121,31 +139,9 @@ namespace ToDoApp
         private void AutoCompleteTextBoxCategory()
         {
             textBox_category.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-            textBox_filter.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
             textBox_category.AutoCompleteSource = AutoCompleteSource.CustomSource;
-            textBox_filter.AutoCompleteSource = AutoCompleteSource.CustomSource;
-            AutoCompleteStringCollection collCat = new AutoCompleteStringCollection();
-            AutoCompleteStringCollection collStat = new AutoCompleteStringCollection();
-            var con = new SQLiteConnection(cs);
-            con.Open();
-
-            string stm = "SELECT * FROM TodoList WHERE isDeleted = 0";
-
-            var cmd = new SQLiteCommand(stm, con);
-            dr = cmd.ExecuteReader();
-
-
-            while (dr.Read())
-            {
-                string categ = dr.GetString(5);
-                string stat = dr.GetString(1);
-                collCat.Add(categ);
-                collStat.Add(stat);
-                                
-            }
             
             textBox_category.AutoCompleteCustomSource = collCat;
-            textBox_filter.AutoCompleteCustomSource = collStat;
 
             for(int i=0; i<collCat.Count; i++)
             {
@@ -153,9 +149,7 @@ namespace ToDoApp
                 {
                     ListCategory.Add(collCat[i]);
                 }
-            }
-            
-            
+            }  
         }
             
 
@@ -163,6 +157,7 @@ namespace ToDoApp
         {
             TableCreation();
             ShowData();
+            changeRowColor();
             AutoCompleteTextBoxCategory();
             tasksFilter_comboBox.Text = "show all tasks";
 
@@ -206,11 +201,7 @@ namespace ToDoApp
                     string[] row = new string[] { Convert.ToString(id), STATUS, DATE, DUE_DATE, TASK, CATEGORY };
                     dataGridView1.Rows.Insert(0, row);
 
-                    maskedTextBox2_SetDate.Text = String.Empty;
-                    maskedTextBox1_DueDate.Text = String.Empty;
-                    textBox_task.Text = String.Empty;
-                    textBox_category.Text = String.Empty;
-                    maskedTextBox2_SetDate.Text = DateTime.Now.ToString("dd/MM/yy");
+                    setTextBoxesDefault();
                 }
 
                 
@@ -241,12 +232,7 @@ namespace ToDoApp
                 cmd.ExecuteNonQuery();
                 dataGridView1.Rows.RemoveAt(rowIndex);
 
-                maskedTextBox2_SetDate.Text = String.Empty;
-                maskedTextBox1_DueDate.Text = String.Empty;
-                textBox_task.Text = String.Empty;
-                textBox_category.Text = String.Empty;
-                maskedTextBox2_SetDate.Text = DateTime.Now.ToString("dd/MM/yy");
-
+                setTextBoxesDefault();
             }
             catch (Exception)
             {
@@ -273,17 +259,39 @@ namespace ToDoApp
                 dataGridView1.Rows[rowIndex].DefaultCellStyle.BackColor = Color.Green;
 
 
-                maskedTextBox2_SetDate.Text = String.Empty;
-                maskedTextBox1_DueDate.Text = String.Empty;
-                textBox_task.Text = String.Empty;
-                textBox_category.Text = String.Empty;
-                maskedTextBox2_SetDate.Text = DateTime.Now.ToString("dd/MM/yy");
+                setTextBoxesDefault();
+                
             }
             catch (Exception)
             {
                 Console.WriteLine("Data cannot be updated");
             }
 
+        }
+        private void findPostponedTasksManyTimes()
+        {
+            cmd.CommandText = "SELECT * FROM ToDoList WHERE postponeTimes >= 3";
+            int checkCmd = Convert.ToInt32(cmd.ExecuteScalar());
+
+            if (checkCmd != 0)
+            {
+                string message = $"There are tasks that you already have been postponed more than three times ";
+                string title = "Get things done!";
+                MessageBox.Show(message, title);
+            }
+        }
+
+        private void checkIfTaskExpired(int currentRow, int dueDateRow, int statusRow)
+        {
+            DateTime currentDate = DateTime.ParseExact(DateTime.Now.ToString("dd/MM/yy"), "dd/MM/yy", null);
+            DateTime tableDate = Convert.ToDateTime(dataGridView1.Rows[currentRow].Cells[dueDateRow].Value);
+            int res = DateTime.Compare(currentDate, tableDate);
+
+            if (res != -1 && Convert.ToString(dataGridView1.Rows[currentRow].Cells[statusRow].Value) != "Completed")
+            {
+                dataGridView1.Rows[currentRow].DefaultCellStyle.BackColor = Color.Red;
+
+            }
         }
 
         private void button3_PostponeTask_Click(object sender, EventArgs e)
@@ -298,40 +306,27 @@ namespace ToDoApp
                 cmd.Prepare();
                 
                 var rowIndex = dataGridView1.CurrentCell.RowIndex;
-                cmd.Parameters.AddWithValue("@id", dataGridView1.Rows[rowIndex].Cells[0].Value);
-                cmd.Parameters.AddWithValue("@due_date", maskedTextBox1_DueDate.Text);
-                cmd.ExecuteNonQuery();
-                dataGridView1.Rows[rowIndex].Cells[3].Value = maskedTextBox1_DueDate.Text;
-                dataGridView1.Rows[rowIndex].Cells[1].Value = "Postponed";
-                dataGridView1.Rows[rowIndex].DefaultCellStyle.BackColor = Color.Yellow;
 
-                DateTime currentDate = DateTime.ParseExact(DateTime.Now.ToString("dd/MM/yy"), "dd/MM/yy", null);
-                DateTime tableDate = Convert.ToDateTime(dataGridView1.Rows[rowIndex].Cells[3].Value);
-                int res = DateTime.Compare(currentDate, tableDate);
-
-                if (res != -1 && Convert.ToString(dataGridView1.Rows[rowIndex].Cells[1].Value) != "Completed")
+                if (!validateTime(maskedTextBox1_DueDate.Text))
                 {
-                    dataGridView1.Rows[rowIndex].DefaultCellStyle.BackColor = Color.Red;
-                    
+                    MessageBox.Show("Please input a valid date");
                 }
-
-                maskedTextBox2_SetDate.Text = String.Empty;
-                maskedTextBox1_DueDate.Text = String.Empty;
-                textBox_task.Text = String.Empty;
-                textBox_category.Text = String.Empty;
-                maskedTextBox2_SetDate.Text = DateTime.Now.ToString("dd/MM/yy");
-
-                cmd.CommandText = "SELECT * FROM ToDoList WHERE postponeTimes >= 3";
-                int checkCmd = Convert.ToInt32(cmd.ExecuteScalar());
-
-                if (checkCmd != 0)
+                else
                 {
-                    string message = $"There are tasks that you already have been postponed more than three times ";
-                    string title = "Get things done!";
-                    MessageBox.Show(message, title);
+
+                    cmd.Parameters.AddWithValue("@id", dataGridView1.Rows[rowIndex].Cells[0].Value);
+                    cmd.Parameters.AddWithValue("@due_date", maskedTextBox1_DueDate.Text);
+                    cmd.ExecuteNonQuery();
+                    dataGridView1.Rows[rowIndex].Cells[3].Value = maskedTextBox1_DueDate.Text;
+                    dataGridView1.Rows[rowIndex].Cells[1].Value = "Postponed";
+                    dataGridView1.Rows[rowIndex].DefaultCellStyle.BackColor = Color.Yellow;
+                    setTextBoxesDefault();
+
+                    checkIfTaskExpired(rowIndex, 3, 1);
+
+                    findPostponedTasksManyTimes();
                 }
-
-
+                
             }
             catch (Exception)
             {
@@ -353,54 +348,21 @@ namespace ToDoApp
             }
         }
 
-        private void textBox_filter_TextChanged(object sender, EventArgs e)
-        {
-            if(!String.IsNullOrEmpty(textBox_filter.Text))
-            {
-                for (int u = 0; u < dataGridView1.RowCount; u++)
-                {
-                    if (dataGridView1.Rows[u].Cells[1].Value != null)
-                    {
-                        if (Convert.ToString(dataGridView1.Rows[u].Cells[1].Value).ToLower() != Convert.ToString(textBox_filter.Text).ToLower())
-                        {
-                            dataGridView1.Rows[u].Visible = false;
-                        }
-                        else
-                        {
-                            dataGridView1.Rows[u].Visible = true;
-                        }
-                    }
-
-                }
-            }
-            else
-            {
-                for (int u = 0; u < dataGridView1.RowCount; u++)
-                {
-                    dataGridView1.Rows[u].Visible = true;
-                }
-            }
-        }
-
         private void tasksFilter_comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             
             if (taskStatus_checkBox.Checked)
             { 
-                findMatchDropDown(1);
+                findMatchDropDown("status");
             }
             else if (taskCategory_checkBox.Checked)
             {
-                findMatchDropDown(5);
-            }
-            else if(taskStatus_checkBox.Checked && taskCategory_checkBox.Checked)
-            {
-                MessageBox.Show("Only one filter category can be chosen");
+                findMatchDropDown("category");
             }
 
         }
 
-        private void findMatchDropDown(int numFilteringRow)
+        private void findMatchDropDown(string numFilteringRow)
         {
             for (int u = 0; u < dataGridView1.RowCount; u++)
             {
@@ -425,48 +387,35 @@ namespace ToDoApp
             }
             
         }
-
-        private void taskStatus_checkBox_CheckedChanged(object sender, EventArgs e)
+        
+        private void ifCheckBoxChecked(CheckBox fieldName, CheckBox fieldName2, List<string> listName)
         {
-            
-            if (taskStatus_checkBox.Checked)
+            if (fieldName.Checked)
             {
-                taskCategory_checkBox.Checked = false;
-                foreach (string item in listStatus)
+                fieldName2.Checked = false;
+                foreach (string item in listName)
                 {
                     tasksFilter_comboBox.Items.Add(item);
                 }
                 tasksFilter_comboBox.Items.Add("show all tasks");
-                
+
             }
             else
             {
-                taskCategory_checkBox.Checked = true;
+                fieldName2.Checked = true;
 
                 tasksFilter_comboBox.Items.Clear();
             }
+        }
 
-
+        private void taskStatus_checkBox_CheckedChanged(object sender, EventArgs e)
+        {
+            ifCheckBoxChecked(taskStatus_checkBox, taskCategory_checkBox, listStatus);
         }
 
         private void taskCategory_checkBox_CheckedChanged(object sender, EventArgs e)
         {
-           
-            if (taskCategory_checkBox.Checked)
-            {
-                taskStatus_checkBox.Checked = false;
-                foreach (string cat in ListCategory)
-                {
-                    tasksFilter_comboBox.Items.Add(cat);
-                }
-                tasksFilter_comboBox.Items.Add("show all tasks");
-
-            }
-            else
-            {
-                taskStatus_checkBox.Checked = true;
-                tasksFilter_comboBox.Items.Clear();
-            }
+            ifCheckBoxChecked(taskCategory_checkBox, taskStatus_checkBox, ListCategory);
         }
     }
 }
