@@ -58,7 +58,7 @@
             // 
             this.button1_AddTask.BackColor = System.Drawing.Color.BlueViolet;
             this.button1_AddTask.ForeColor = System.Drawing.Color.White;
-            this.button1_AddTask.Location = new System.Drawing.Point(14, 541);
+            this.button1_AddTask.Location = new System.Drawing.Point(33, 496);
             this.button1_AddTask.Margin = new System.Windows.Forms.Padding(5);
             this.button1_AddTask.Name = "button1_AddTask";
             this.button1_AddTask.Size = new System.Drawing.Size(140, 60);
@@ -71,7 +71,7 @@
             // 
             this.button2_CompleteTask.BackColor = System.Drawing.Color.BlueViolet;
             this.button2_CompleteTask.ForeColor = System.Drawing.Color.White;
-            this.button2_CompleteTask.Location = new System.Drawing.Point(245, 541);
+            this.button2_CompleteTask.Location = new System.Drawing.Point(229, 496);
             this.button2_CompleteTask.Margin = new System.Windows.Forms.Padding(5);
             this.button2_CompleteTask.Name = "button2_CompleteTask";
             this.button2_CompleteTask.Size = new System.Drawing.Size(140, 60);
@@ -84,7 +84,7 @@
             // 
             this.button3_PostponeTask.BackColor = System.Drawing.Color.BlueViolet;
             this.button3_PostponeTask.ForeColor = System.Drawing.Color.White;
-            this.button3_PostponeTask.Location = new System.Drawing.Point(14, 649);
+            this.button3_PostponeTask.Location = new System.Drawing.Point(33, 600);
             this.button3_PostponeTask.Margin = new System.Windows.Forms.Padding(5);
             this.button3_PostponeTask.Name = "button3_PostponeTask";
             this.button3_PostponeTask.Size = new System.Drawing.Size(140, 60);
@@ -97,7 +97,7 @@
             // 
             this.button4_DeleteTask.BackColor = System.Drawing.Color.BlueViolet;
             this.button4_DeleteTask.ForeColor = System.Drawing.Color.White;
-            this.button4_DeleteTask.Location = new System.Drawing.Point(243, 649);
+            this.button4_DeleteTask.Location = new System.Drawing.Point(229, 600);
             this.button4_DeleteTask.Margin = new System.Windows.Forms.Padding(5);
             this.button4_DeleteTask.Name = "button4_DeleteTask";
             this.button4_DeleteTask.Size = new System.Drawing.Size(140, 60);
@@ -108,7 +108,7 @@
             // 
             // textBox_task
             // 
-            this.textBox_task.Location = new System.Drawing.Point(14, 255);
+            this.textBox_task.Location = new System.Drawing.Point(13, 291);
             this.textBox_task.Margin = new System.Windows.Forms.Padding(5);
             this.textBox_task.Multiline = true;
             this.textBox_task.Name = "textBox_task";
@@ -118,7 +118,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(19, 218);
+            this.label1.Location = new System.Drawing.Point(11, 252);
             this.label1.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(141, 25);
@@ -135,13 +135,14 @@
             this.due_date,
             this.task,
             this.category});
-            this.dataGridView1.Location = new System.Drawing.Point(394, 82);
+            this.dataGridView1.Location = new System.Drawing.Point(403, 82);
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(5);
             this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 24;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(788, 503);
+            this.dataGridView1.Size = new System.Drawing.Size(779, 474);
             this.dataGridView1.TabIndex = 8;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             // 
@@ -150,6 +151,7 @@
             this.id.HeaderText = "TaskNo";
             this.id.MinimumWidth = 6;
             this.id.Name = "id";
+            this.id.ReadOnly = true;
             this.id.Width = 80;
             // 
             // status
@@ -157,6 +159,7 @@
             this.status.HeaderText = "TaskStatus";
             this.status.MinimumWidth = 6;
             this.status.Name = "status";
+            this.status.ReadOnly = true;
             this.status.Width = 125;
             // 
             // date
@@ -164,6 +167,7 @@
             this.date.HeaderText = "Setdate";
             this.date.MinimumWidth = 6;
             this.date.Name = "date";
+            this.date.ReadOnly = true;
             this.date.Width = 90;
             // 
             // due_date
@@ -171,6 +175,7 @@
             this.due_date.HeaderText = "Duedate";
             this.due_date.MinimumWidth = 6;
             this.due_date.Name = "due_date";
+            this.due_date.ReadOnly = true;
             this.due_date.Width = 90;
             // 
             // task
@@ -178,6 +183,7 @@
             this.task.HeaderText = "Task";
             this.task.MinimumWidth = 6;
             this.task.Name = "task";
+            this.task.ReadOnly = true;
             this.task.Width = 200;
             // 
             // category
@@ -185,20 +191,21 @@
             this.category.HeaderText = "Taskcategory";
             this.category.MinimumWidth = 6;
             this.category.Name = "category";
+            this.category.ReadOnly = true;
             this.category.Width = 150;
             // 
             // textBox_category
             // 
-            this.textBox_category.Location = new System.Drawing.Point(17, 474);
+            this.textBox_category.Location = new System.Drawing.Point(13, 200);
             this.textBox_category.Margin = new System.Windows.Forms.Padding(5);
             this.textBox_category.Name = "textBox_category";
-            this.textBox_category.Size = new System.Drawing.Size(371, 30);
+            this.textBox_category.Size = new System.Drawing.Size(284, 30);
             this.textBox_category.TabIndex = 10;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(20, 48);
+            this.label2.Location = new System.Drawing.Point(12, 80);
             this.label2.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(130, 25);
@@ -208,7 +215,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(22, 439);
+            this.label3.Location = new System.Drawing.Point(13, 170);
             this.label3.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(136, 25);
@@ -218,7 +225,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(17, 136);
+            this.label4.Location = new System.Drawing.Point(187, 80);
             this.label4.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(137, 25);
@@ -227,28 +234,28 @@
             // 
             // maskedTextBox1_DueDate
             // 
-            this.maskedTextBox1_DueDate.Location = new System.Drawing.Point(12, 178);
+            this.maskedTextBox1_DueDate.Location = new System.Drawing.Point(192, 114);
             this.maskedTextBox1_DueDate.Margin = new System.Windows.Forms.Padding(5);
             this.maskedTextBox1_DueDate.Mask = "00/00/00";
             this.maskedTextBox1_DueDate.Name = "maskedTextBox1_DueDate";
-            this.maskedTextBox1_DueDate.Size = new System.Drawing.Size(371, 30);
+            this.maskedTextBox1_DueDate.Size = new System.Drawing.Size(105, 30);
             this.maskedTextBox1_DueDate.TabIndex = 15;
             this.maskedTextBox1_DueDate.ValidatingType = typeof(System.DateTime);
             // 
             // maskedTextBox2_SetDate
             // 
-            this.maskedTextBox2_SetDate.Location = new System.Drawing.Point(13, 82);
+            this.maskedTextBox2_SetDate.Location = new System.Drawing.Point(13, 114);
             this.maskedTextBox2_SetDate.Margin = new System.Windows.Forms.Padding(4);
             this.maskedTextBox2_SetDate.Mask = "00/00/00";
             this.maskedTextBox2_SetDate.Name = "maskedTextBox2_SetDate";
-            this.maskedTextBox2_SetDate.Size = new System.Drawing.Size(371, 30);
+            this.maskedTextBox2_SetDate.Size = new System.Drawing.Size(105, 30);
             this.maskedTextBox2_SetDate.TabIndex = 16;
             this.maskedTextBox2_SetDate.ValidatingType = typeof(System.DateTime);
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(657, 603);
+            this.label5.Location = new System.Drawing.Point(657, 577);
             this.label5.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(85, 25);
@@ -258,7 +265,7 @@
             // tasksFilter_comboBox
             // 
             this.tasksFilter_comboBox.FormattingEnabled = true;
-            this.tasksFilter_comboBox.Location = new System.Drawing.Point(814, 610);
+            this.tasksFilter_comboBox.Location = new System.Drawing.Point(814, 584);
             this.tasksFilter_comboBox.Name = "tasksFilter_comboBox";
             this.tasksFilter_comboBox.Size = new System.Drawing.Size(374, 33);
             this.tasksFilter_comboBox.TabIndex = 19;
@@ -267,7 +274,7 @@
             // taskCategory_radioButton
             // 
             this.taskCategory_radioButton.AutoSize = true;
-            this.taskCategory_radioButton.Location = new System.Drawing.Point(662, 666);
+            this.taskCategory_radioButton.Location = new System.Drawing.Point(662, 640);
             this.taskCategory_radioButton.Name = "taskCategory_radioButton";
             this.taskCategory_radioButton.Size = new System.Drawing.Size(149, 29);
             this.taskCategory_radioButton.TabIndex = 22;
@@ -279,7 +286,7 @@
             // taskStatus_radioButton
             // 
             this.taskStatus_radioButton.AutoSize = true;
-            this.taskStatus_radioButton.Location = new System.Drawing.Point(662, 631);
+            this.taskStatus_radioButton.Location = new System.Drawing.Point(662, 605);
             this.taskStatus_radioButton.Name = "taskStatus_radioButton";
             this.taskStatus_radioButton.Size = new System.Drawing.Size(126, 29);
             this.taskStatus_radioButton.TabIndex = 23;
@@ -293,7 +300,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
-            this.ClientSize = new System.Drawing.Size(1200, 723);
+            this.ClientSize = new System.Drawing.Size(1200, 703);
             this.Controls.Add(this.taskStatus_radioButton);
             this.Controls.Add(this.taskCategory_radioButton);
             this.Controls.Add(this.tasksFilter_comboBox);
